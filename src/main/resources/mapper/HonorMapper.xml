@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.football.crud.dao.HonorMapper">
+  <resultMap id="BaseResultMap" type="com.football.crud.bean.Honor">
+    <id column="hor_id" jdbcType="INTEGER" property="horId" />
+    <result column="hor_img" jdbcType="VARCHAR" property="horImg" />
+    <result column="hor_name" jdbcType="VARCHAR" property="horName" />
+    <result column="hor_detail" jdbcType="VARCHAR" property="horDetail" />
+    <result column="hor_time" jdbcType="DATE" property="horTime" />
+    <result column="hor_forname" jdbcType="VARCHAR" property="horForname" />
+    <result column="hor_type" jdbcType="INTEGER" property="horType" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    hor_id, hor_img, hor_name, hor_detail, hor_time, hor_forname, hor_type
+  </sql>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+  	select * from tbl_hor
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_hor
+    where hor_id = #{horId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_hor
+    where hor_id = #{horId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.football.crud.bean.Honor">
+    insert into tbl_hor (hor_id, hor_img, hor_name, 
+      hor_detail, hor_time, hor_forname, 
+      hor_type)
+    values (#{horId,jdbcType=INTEGER}, #{horImg,jdbcType=VARCHAR}, #{horName,jdbcType=VARCHAR}, 
+      #{horDetail,jdbcType=VARCHAR}, #{horTime,jdbcType=DATE}, #{horForname,jdbcType=VARCHAR}, 
+      #{horType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.football.crud.bean.Honor">
+    insert into tbl_hor
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="horId != null">
+        hor_id,
+      </if>
+      <if test="horImg != null">
+        hor_img,
+      </if>
+      <if test="horName != null">
+        hor_name,
+      </if>
+      <if test="horDetail != null">
+        hor_detail,
+      </if>
+      <if test="horTime != null">
+        hor_time,
+      </if>
+      <if test="horForname != null">
+        hor_forname,
+      </if>
+      <if test="horType != null">
+        hor_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="horId != null">
+        #{horId,jdbcType=INTEGER},
+      </if>
+      <if test="horImg != null">
+        #{horImg,jdbcType=VARCHAR},
+      </if>
+      <if test="horName != null">
+        #{horName,jdbcType=VARCHAR},
+      </if>
+      <if test="horDetail != null">
+        #{horDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="horTime != null">
+        #{horTime,jdbcType=DATE},
+      </if>
+      <if test="horForname != null">
+        #{horForname,jdbcType=VARCHAR},
+      </if>
+      <if test="horType != null">
+        #{horType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.football.crud.bean.Honor">
+    update tbl_hor
+    <set>
+      <if test="horImg != null">
+        hor_img = #{horImg,jdbcType=VARCHAR},
+      </if>
+      <if test="horName != null">
+        hor_name = #{horName,jdbcType=VARCHAR},
+      </if>
+      <if test="horDetail != null">
+        hor_detail = #{horDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="horTime != null">
+        hor_time = #{horTime,jdbcType=DATE},
+      </if>
+      <if test="horForname != null">
+        hor_forname = #{horForname,jdbcType=VARCHAR},
+      </if>
+      <if test="horType != null">
+        hor_type = #{horType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where hor_id = #{horId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.football.crud.bean.Honor">
+    update tbl_hor
+    set hor_img = #{horImg,jdbcType=VARCHAR},
+      hor_name = #{horName,jdbcType=VARCHAR},
+      hor_detail = #{horDetail,jdbcType=VARCHAR},
+      hor_time = #{horTime,jdbcType=DATE},
+      hor_forname = #{horForname,jdbcType=VARCHAR},
+      hor_type = #{horType,jdbcType=INTEGER}
+    where hor_id = #{horId,jdbcType=INTEGER}
+  </update>
+</mapper>

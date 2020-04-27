@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.football.crud.dao.AdVideoMapper">
+  <resultMap id="BaseResultMap" type="com.football.crud.bean.AdVideo">
+    <id column="adv_id" jdbcType="INTEGER" property="advId" />
+    <result column="adv_title" jdbcType="VARCHAR" property="advTitle" />
+    <result column="adv_text" jdbcType="VARCHAR" property="advText" />
+    <result column="adv_path" jdbcType="VARCHAR" property="advPath" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List">
+    adv_id, adv_title, adv_text, adv_path
+  </sql>
+ 
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_adv
+    where adv_id = #{advId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_adv
+    where adv_id = #{advId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.football.crud.bean.AdVideo">
+    insert into tbl_adv (adv_id, adv_title, adv_text, 
+      adv_path)
+    values (#{advId,jdbcType=INTEGER}, #{advTitle,jdbcType=VARCHAR}, #{advText,jdbcType=VARCHAR}, 
+      #{advPath,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.football.crud.bean.AdVideo">
+    insert into tbl_adv
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="advId != null">
+        adv_id,
+      </if>
+      <if test="advTitle != null">
+        adv_title,
+      </if>
+      <if test="advText != null">
+        adv_text,
+      </if>
+      <if test="advPath != null">
+        adv_path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="advId != null">
+        #{advId,jdbcType=INTEGER},
+      </if>
+      <if test="advTitle != null">
+        #{advTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="advText != null">
+        #{advText,jdbcType=VARCHAR},
+      </if>
+      <if test="advPath != null">
+        #{advPath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.football.crud.bean.AdVideo">
+    update tbl_adv
+    <set>
+      <if test="advTitle != null">
+        adv_title = #{advTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="advText != null">
+        adv_text = #{advText,jdbcType=VARCHAR},
+      </if>
+      <if test="advPath != null">
+        adv_path = #{advPath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where adv_id = #{advId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.football.crud.bean.AdVideo">
+    update tbl_adv
+    set adv_title = #{advTitle,jdbcType=VARCHAR},
+      adv_text = #{advText,jdbcType=VARCHAR},
+      adv_path = #{advPath,jdbcType=VARCHAR}
+    where adv_id = #{advId,jdbcType=INTEGER}
+  </update>
+</mapper>

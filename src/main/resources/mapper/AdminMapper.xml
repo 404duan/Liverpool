@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.football.crud.dao.AdminMapper">
+  <resultMap id="BaseResultMap" type="com.football.crud.bean.Admin">
+    <id column="adm_id" jdbcType="INTEGER" property="admId" />
+    <result column="adm_name" jdbcType="CHAR" property="admName" />
+    <result column="adm_password" jdbcType="VARCHAR" property="admPassword" />
+    <result column="adm_email" jdbcType="VARCHAR" property="admEmail" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List">
+    adm_id, adm_name, adm_password, adm_email
+  </sql>
+  
+  <select id="selectByAdmName" resultType="com.football.crud.bean.Admin">
+  	SELECT * FROM tbl_admin WHERE adm_name = #{arg0}
+  </select>
+  
+  <select id="selectByAdm" resultType="java.lang.Integer">
+  	SELECT adm_id FROM tbl_admin WHERE adm_name = #{arg0} AND adm_password = #{arg1}
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_admin
+    where adm_id = #{admId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_admin
+    where adm_id = #{admId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.football.crud.bean.Admin">
+    insert into tbl_admin (adm_id, adm_name, adm_password, 
+      adm_email)
+    values (#{admId,jdbcType=INTEGER}, #{admName,jdbcType=CHAR}, #{admPassword,jdbcType=VARCHAR}, 
+      #{admEmail,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.football.crud.bean.Admin">
+    insert into tbl_admin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="admId != null">
+        adm_id,
+      </if>
+      <if test="admName != null">
+        adm_name,
+      </if>
+      <if test="admPassword != null">
+        adm_password,
+      </if>
+      <if test="admEmail != null">
+        adm_email,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="admId != null">
+        #{admId,jdbcType=INTEGER},
+      </if>
+      <if test="admName != null">
+        #{admName,jdbcType=CHAR},
+      </if>
+      <if test="admPassword != null">
+        #{admPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="admEmail != null">
+        #{admEmail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.football.crud.bean.Admin">
+    update tbl_admin
+    <set>
+      <if test="admName != null">
+        adm_name = #{admName,jdbcType=CHAR},
+      </if>
+      <if test="admPassword != null">
+        adm_password = #{admPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="admEmail != null">
+        adm_email = #{admEmail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where adm_id = #{admId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.football.crud.bean.Admin">
+    update tbl_admin
+    set adm_name = #{admName,jdbcType=CHAR},
+      adm_password = #{admPassword,jdbcType=VARCHAR},
+      adm_email = #{admEmail,jdbcType=VARCHAR}
+    where adm_id = #{admId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>利物浦足球俱乐部</title>
+<link rel="shortcut icon" href="https://d3j2s6hdd6a7rg.cloudfront.net/v2/JE-469/lfc/images/favicon.png" type="image/png"/>
+<link rel="stylesheet" href="css/bootstrap.css">
+<style>
+body {
+	padding-top: 50px;
+	/* padding-bottom: 50px; */
+	position: relative;
+}
+
+iframe{
+	width:500px;
+	height:400px;
+}
+
+.list-group{
+	width: 200px;
+}
+
+.hr-more {
+    height: 20px;  /* div的高度 */
+    width: 100px;   /* div的宽度 */
+     
+    position: relative; ///* div相对定位（重点！） */
+    left: 50%;  /* 将div相对于自己与左边(left)移动50%的距离（重点！） */
+    top: -30px;  /* 将div相对于自己向上(top)移动-30px的距离<调整你自己的参数>（重点！） */
+     
+    font: normal 1.2em/20px 微软雅黑; /* 字体（并不是必须，可不添加） */
+    vertical-align: middle; /* 垂直居中（并不是必须，可不添加） */
+    text-align: center; /* 水平居中（并不是必须，可不添加） */
+    border-radius: 4px; /* div呈现圆角效果（并不是必须，可不添加） */
+    background-color: chartreuse; /* div的背景色（并不是必须，可不添加） */
+}
+
+.busiInfo{
+	margin-top:20px;
+	vertical-align: middle; 
+	text-align: center; 
+}
+
+.busiInfo a{
+	margin: 50px;
+}
+
+.carousel {
+	height: 650px;
+	background: black;
+	margin-bottom: 60px;
+}
+
+.carousel .item {
+	height: 650px;
+	background: black;
+}
+
+.carousel .item img {
+	width: 100%;
+}
+
+.carousel-caption {
+	z-index: 10;
+}
+
+.carousel-caption p {
+	margin-bottom: 20px;
+	font-size: 20px;
+	line-height: 1.8;
+}
+
+#summary-container .col-md-4 {
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.divider {
+	margin: 30px 0px;
+}
+
+.feature {
+	padding: 30px 0px;
+}
+
+.feature-heading {
+	font-size: 40px;
+	color: #2a6496;
+	margin-top: 120px;
+}
+
+.feature-heading .text-muted {
+	font-size: 28px;
+	color: #999999;
+}
+
+/* 球员列表样式 */
+.team-player-list{
+	clear: both;
+	overflow：hidden;
+}
+.team-player-list h2 {
+	color: #333;
+	line-height: 1.2;
+	margin: 10px 0;
+	text-transform: uppercase;
+	border-bottom: 3px solid #e31b23;
+}
+.list-group-item.player{
+	text-align: center;
+	max-width:200px;
+	max-height:200px;
+	margin:4px;
+	float:left;
+	border: 0;
+}
+.img-circle.player{
+	max-width:150px;
+	max-height:150px;
+}
+.number{
+	color:red;
+	font-size:18px;
+}
+
+/* 响应式布局 */
+@media ( max-width : 768px) {
+	.summary {
+		padding-right: 3px;
+		padding-left: 3px;
+	}
+	.carousel {
+		height: 300px;
+		margin-bottom: 30px;
+	}
+	.carousel .item {
+		height: 300px;
+	}
+	.carousel img {
+		min-height: 300px;
+	}
+	.carousel-caption p {
+		font-size: 16px;
+		line-height: 1.4;
+	}
+	.feature-heading {
+		font-size: 34px;
+	}
+	.feature-heading .text-muted {
+		font-size: 22px;
+	}
+}
+
+@media ( min-width : 992px) {
+	.feature-heading {
+		margin-top: 120px;
+	}
+}
+
+/* 涟漪 */
+section {
+	/* background-image:; */
+	background-size: cover;
+	height: 100vh;
+	z-index: 100 !important;
+}
+
+#carousel-example-generic {
+	position: absolute;
+	top: 50px;
+	left: 0px;
+}
+
+#carousel-example-generic .left {
+	z-index: 1000 !important;
+}
+
+#carousel-example-generic .right {
+	z-index: 1000 !important;
+}
+
+#carousel-example-generic .zi {
+	z-index: 1000 !important;
+}
+
+.col-md-4 img:hover {
+	transform: scale(1.2);
+	transition: 0.4s ease;
+}
+
+.col-md-5 img:hover {
+	transform: scale(1.1);
+	transition: 0.4s ease;
+}
+
+#bobo {
+	height: 100px;
+}
+</style>
+</head>
+<script src="js/jquery-3.4.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<body>
+
+	<!-- 顶部导航 -->
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#demo-navbar"
+					aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">利物浦足球俱乐部</a>
+			</div>
+			<div class="collapse navbar-collapse" id="demo-navbar">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">首页 <span class="sr-only">(current)</span></a></li>
+					<li><a href="admin/admin.jsp">球队管理</a></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">俱乐部<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#tab-chrome" data-tab="tab-chrome">宣传片</a></li>
+							<li><a href="#tab-firefox" data-tab="tab-firefox">球队历史</a></li>
+							<li><a id="playerMenu" href="#tab-safari" data-tab="tab-safari">球员列表</a></li>
+							<li><a id="mansMenu" href="#tab-opera" data-tab="tab-opera">管理团队</a></li>
+							<li><a id="horsMenu" href="#tab-ie" data-tab="tab-ie">球队荣誉</a></li>
+							<li><a id="busiMenu" href="#tab-xz" data-tab="tab-xz">合作伙伴</a></li>
+						</ul></li>
+					<li><a href="#" data-toggle="modal" data-target="#about">关于</a></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+	<!-- 水波涟漪 -->
+	<section></section>
+	<!-- 轮播图 -->
+	<div id="carousel-example-generic" class="carousel slide"
+		data-ride="carousel">
+		<ol class="carousel-indicators">
+			<li data-target="#carousel-example-generic" data-slide-to="0"
+				class="active"></li>
+			<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+			<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+		</ol>
+		<div class="carousel-inner" role="listbox">
+			<div class="item active">
+				<img id="photo-1"
+					src=""
+					alt="firefox">
+			</div>
+			<div class="item">
+				<img id="photo-2"
+					src=""
+					alt="firefox">
+			</div>
+			<div class="item">
+				<img id="photo-3"
+					src=""
+					alt="firefox">
+			</div>
+		</div>
+		<a class="left carousel-control" href="#carousel-example-generic"
+			role="button" data-slide="prev"> <span
+			class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span
+			class="sr-only">上一页</span>
+		</a> <a class="right carousel-control" href="#carousel-example-generic"
+			role="button" data-slide="next"> <span
+			class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+			<span class="sr-only">下一页</span>
+		</a>
+	</div>
+	<hr class="divider">
+	<!-- 三栏布局 -->
+	<div class="container">
+		<!-- 水平线 -->
+		<hr class="divider">
+		<!-- 标签页 -->
+		<ul class="nav nav-tabs" role="tablist" id="tab-list">
+			<li role="presentation" class="active"><a href="#tab-chrome"
+				aria-controls="home" role="tab" data-toggle="tab">宣传片</a></li>
+			<li role="presentation"><a href="#tab-firefox"
+				aria-controls="profile" role="tab" data-toggle="tab">球队历史</a></li>
+			<li role="presentation"><a href="#tab-safari"
+				aria-controls="messages" role="tab" data-toggle="tab" id="playerMenu2">球员列表</a></li>
+			<li role="presentation"><a href="#tab-opera"
+				aria-controls="settings" role="tab" data-toggle="tab" id="mansMenu2">管理团队</a></li>
+			<li role="presentation"><a href="#tab-ie"
+				aria-controls="settings" role="tab" data-toggle="tab" id="horsMenu2">球队荣誉</a></li>
+			<li role="presentation"><a href="#tab-xz"
+				aria-controls="settings" role="tab" data-toggle="tab" id="busiMenu2">合作伙伴</a></li>
+		</ul>
+		<!-- 标签页下面的内容 -->
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="tab-chrome">
+				<div class="row feature">
+					<div class="col-md-7">
+						<h2 class="feature-heading">
+							<span id="advTitle"></span> <br><br><span id="advText" class="text-muted"></span>
+						</h2>
+					</div>
+					<div id="advPath" class="col-md-5" style="margin-top: 30px;"></div>
+				</div>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="tab-firefox">
+				<div class="row feature">
+					<div class="col-md-12">
+						<p class="lead" style="text-indent: 2em;"></p>
+					</div>
+				</div>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="tab-safari">
+				<div class="row feature">
+					<!-- 球员列表 -->
+					<div class="container">
+						<div class="team-player-list">
+							<h2>门将 GOALKEEPERS <span class="badge" id="goalkeeperNum"></span></h2>
+							<ul class="list-group" style="width:100%;" id="goalkeepers"></ul>
+						</div>
+						<div class="team-player-list">
+							<h2>后卫 DEFENDERS <span class="badge" id="defenderNum"></span></h2>
+							<ul class="list-group" style="width:100%;" id="defenders"></ul>
+						</div>
+						<div class="team-player-list">
+							<h2>中场 MIDFIELDERS <span class="badge" id="midfielderNum"></span></h2>
+							<ul class="list-group" style="width:100%;" id="midfielders"></ul>
+						</div>
+						<div class="team-player-list">
+							<h2>前锋 FORWARDS <span class="badge" id="forwardNum"></span></h2>
+							<ul class="list-group" style="width:100%;" id="forwards"></ul>
+						</div>
+						<div class="team-player-list">
+							<h2>合影 GROUPHOTO <span class="badge" id="groupphoto"></span></h2>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<img id="photo-4" class="feature-image img-responsive" src="" alt="Safari">
+					</div>
+					
+				</div>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="tab-opera">
+			
+			<div class="container">
+				<div id="hrsMan">
+					<hr style="border: 1px solid #c0c0c0">
+					<div class="hr-more">管理团队</div>
+				</div>
+				<div id="mans_div" class="row"></div>
+				<div id="hrsCoach">
+					<hr style="border: 1px solid #c0c0c0">
+					<div class="hr-more">教练团队</div>
+				</div>
+				<div id="coachs_div" class="row"></div>
+			</div>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="tab-ie">
+			<div class="container">
+		<!-- 显示表格数据 -->
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-striped table-hover" id="hors_table">
+					<thead>
+						<tr class="warning">
+							<th>赛事</th>
+							<th>外文名</th>
+							<th>赛季</th>
+							<th>备注</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+		</div>
+		<!-- 显示分页信息 -->
+		<div class="row">
+			<!-- 分页文字信息 -->
+			<div class="col-md-6" id="page_info_area"></div>
+			<!-- 分页条信息 -->
+			<div class="col-md-6" id="page_nav_area"></div>
+		</div>
+	</div>
+			</div>
+				<div role="tabpanel" id="tab-xz" class="busiInfo tab-pane">
+					<div id="businessCorp"></div>
+				</div>
+		</div>
+		<!-- 水平线 -->
+		<hr class="divider">
+		<!-- 页脚 -->
+		<footer>
+			<p class="pull-right">
+				<a href="#top">回到顶部</a>
+			</p>
+			<p class="pull-left"
+				style="color: rgba(0, 0, 0, .45); text-align: center; font-size: 14px;">Copyright
+				© 2020 段琦</p>
+			<p class="col-md-offset-5" style="font-size: 20px;color: rgba(0, 0, 0, .45);">You'll Never
+				Walk Alone</p>
+			<!-- <p ></p> -->
+		</footer>
+	</div>
+	<div id="bobo"></div>
+	<!-- 关于模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="about">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">关于</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-2">
+							<address>
+								<a target="_blank" href="https://weibo.com/liverpoolfc"><img style="height:50px;width:50px;margin-left:20px;" alt="weibo" src="images/微博.png"></a>
+							</address>
+						</div>
+						<div class="col-md-2">
+							<address>
+								<a href="https://twitter.com/lfc" target="_blank"><img style="height:50px;width:50px;margin-left:20px;" alt="twitter" src="images/twitter.png"></a>
+							</address>
+						</div>
+						<div class="col-md-7" style="margin-left:20px;">
+							<address>
+							<img style="height:20px;width:20px;" alt="Email" src="images/邮箱.png">
+								<strong>邮箱地址：</strong><a href="mailto:#">contact@liverpoolfc.com</a>
+							</address>
+						</div>
+						<div class="col-md-7" style="margin-left:20px;">
+							<address>
+							<img style="height:20px;width:20px;" alt="Email" src="images/地址.png">
+								<strong>通讯地址：Anfield Road,Liverpool,L4 0TH</strong><br>
+							</address>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	
+	<div class="modal fade" tabindex="-1" role="dialog" id="playerModal">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="playerNameShow">萨拉赫</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="container">
+	      		<div style="text-align:center;width:550px;background-repeat: no-repeat;float: none;background-size: cover;">
+      				<div class="row">
+      					<img id="photoShow" class="img-circle" style="width:150px;margin-top: 10px;" src="https://d3j2s6hdd6a7rg.cloudfront.net/v2/uploads/media/misc/0001/92/thumb_91656_misc_general_500.jpeg">
+      				</div>
+      				<div class="row" style="margin: 10px;">
+      					<div class="panel panel-success">
+      						<div class="panel-heading">基本资料</div>
+							<div class="panel-body" style="padding:0;">
+								<table class="table table-bordered" style="margin-bottom:0;">
+									<tr><td style="font-weight: bold;">全名</td><td id="fullNameShow">Mohamed Salah</td></tr>
+									<tr><td style="font-weight: bold;">号码</td><td id="numShow">11号</td></tr>
+									<tr><td style="font-weight: bold;">位置</td><td id="posShow">前锋</td></tr>
+									<tr><td style="font-weight: bold;">身高</td><td id="heightShow">175cm</td></tr>
+									<tr><td style="font-weight: bold;">体重</td><td id="weightShow">72kg</td></tr>
+									<tr><td style="font-weight: bold;">生日</td><td id="birthShow">1992-11-11</td></tr>
+									<tr><td style="font-weight: bold;">国籍</td><td id="nationShow">Egypt</td></tr>
+									<tr><td style="font-weight: bold;">周薪</td><td id="wageShow">£ 20万</td></tr>
+									<tr><td style="font-weight: bold;">合同到期</td><td id="contractShow">2023-06-30</td></tr>
+								</table>
+							</div>
+      					</div>
+      				</div>
+	      		</div>
+	      	</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+<script src="js/jquery.ripples-min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/raindrops.js"></script>
+<script src="js/highlight.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.ajax({
+		url:"/ssm-crud/getAdv",
+		type:"GET",
+		success:function(result){
+			//console.log(result.extend.extend.advTitle);
+			$("#advTitle").text(result.extend.extend.advTitle);
+			$("#advText").text(result.extend.extend.advText);
+			$("#advPath").html(result.extend.extend.advPath);
+		}
+		});
+		
+		$.ajax({
+			url:"/ssm-crud/gethisText",
+			type:"get",
+			success:function(res){
+				//console.log(res);
+				$(".lead").text(res.extend.hisDetail.hisText);
+			}
+		});
+	});
+</script>
+<script type="text/javascript">
+		$(document).ready(function(){
+			$.ajax({
+				url:"/ssm-crud/carou",
+				type:"GET",
+				success:function(result){
+					//console.log(result);
+					$("#photo-1").attr("src",result.extend.allImg[0].imgPath);
+					$("#photo-2").attr("src",result.extend.allImg[1].imgPath);
+					$("#photo-3").attr("src",result.extend.allImg[2].imgPath);
+					$("#photo-4").attr("src",result.extend.allImg[3].imgPath);
+				}
+			});
+			//to_page(1);
+		});
+		
+		$("#busiMenu2").click(function(){
+			$("#busiMenu").click();
+		})
+		
+		$("#busiMenu").click(function() {
+			$.ajax({
+				url:"/ssm-crud/busi",
+				type:"get",
+				success:function(res){
+					build_busi_div(res.extend.busi);
+				}
+			})
+		})
+		
+		function build_busi_div(busis) {
+			//清空
+			$("#businessCorp").empty();
+			$.each(busis,function(index,item){
+				$("<a></a>").attr("href",item.busiHref).attr("title",item.busiType).attr("target","_blank")
+				.append($("<img>").attr("src",item.busiLogo))
+				.appendTo(businessCorp);
+			})
+		}
+		
+		$("#horsMenu2").click(function(){
+			to_page(1);
+		})
+		
+		$("#horsMenu").click(function(){
+			to_page(1);
+		})
+		
+		function to_page(pn){
+			$.ajax({
+				url:"/ssm-crud/hors",
+				data:"pn="+pn,
+				type:"get",
+				success:function(result){
+					//console.log(result);
+					//1、解析并显示数据
+					build_hors_table(result);
+					//2、解析并显示分页信息
+					build_page_info(result);
+					//3、解析显示分页条数据
+					build_page_nav(result);
+				}
+			});
+		}
+		
+		function build_hors_table(result){
+			//清空table表格
+			$("#hors_table tbody").empty();
+			var hors = result.extend.pageInfo.list;
+			$.each(hors,function(index,item){
+				var horNameTd = $("<td></td>").append(item.horName);
+				var horFornameTd = $("<td></td>").append(item.horForname);
+				var horDetailTd = $("<td></td>").append(item.horDetail);
+				var horImgTd = $("<td></td>").append(item.horImg);
+				$("<tr></tr>")
+					.append(horNameTd)
+					.append(horFornameTd)
+					.append(horDetailTd)
+					.append(horImgTd)
+					.appendTo("#hors_table tbody");
+			});
+		}
+		//解析显示分页信息 <span class="label label-default">New</span>
+		function build_page_info(result){
+			$("#page_info_area").empty();
+			var spanLabel0 = $("<span></span>").addClass("label label-info");
+			var spanLabel1 = $("<span></span>").addClass("label label-info");
+			var spanLabel2 = $("<span></span>").addClass("label label-info");
+			$("#page_info_area").append("当前 ").append(spanLabel0.append(result.extend.pageInfo.pageNum)).append(" 页，总 ")
+			.append(spanLabel1.append(result.extend.pageInfo.pages)).append(" 页，总 ")
+			.append(spanLabel2.append(result.extend.pageInfo.total)).append(" 条记录");
+			totalRecord = result.extend.pageInfo.total;
+			currentPage = result.extend.pageInfo.pageNum
+		}
+		//解析显示分页条
+		function build_page_nav(result){
+			$("#page_nav_area").empty();
+			//page_nav_area
+			var ul = $("<ul></ul>").addClass("pagination");
+			var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").css("cursor","pointer"));
+			var prePageLi = $("<li></li>").append($("<a></a>").append("上页").css("cursor","pointer"));
+			if(result.extend.pageInfo.hasPreviousPage == false){
+				firstPageLi.addClass("disabled");
+				prePageLi.addClass("disabled");
+			}else{
+				//为元素添加点击翻页的事件
+				firstPageLi.click(function(){
+					to_page(1);
+				});
+				prePageLi.click(function(){
+					to_page(result.extend.pageInfo.pageNum - 1);
+				});
+			}
+			
+			var nextPageLi = $("<li></li>").append($("<a></a>").append("下页").css("cursor","pointer"));
+			var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").css("cursor","pointer"));
+			if(result.extend.pageInfo.hasNextPage == false){
+				nextPageLi.addClass("disabled");
+				lastPageLi.addClass("disabled");
+			}else{
+				nextPageLi.click(function(){
+					to_page(result.extend.pageInfo.pageNum + 1);
+				});
+				lastPageLi.click(function(){
+					to_page(result.extend.pageInfo.pages);
+				});
+			}
+			
+			//添加首页和前一页的提示
+			ul.append(firstPageLi).append(prePageLi);
+			$.each(result.extend.pageInfo.navigatepageNums,function(index,item){
+				var numLi = $("<li></li>").append($("<a></a>").append(item).css("cursor","pointer"));
+				if(result.extend.pageInfo.pageNum == item){
+					numLi.addClass("active");
+				}
+				numLi.click(function(){
+					to_page(item);
+				});
+				ul.append(numLi);
+			});
+			//添加下一页和末页的提示
+			ul.append(nextPageLi).append(lastPageLi);
+			
+			//把ul加入到nav
+			var navEle = $("<nav></nav>").append(ul);
+			navEle.appendTo("#page_nav_area");
+		}
+	
+	$("#playerMenu2").click(function() {
+		$("#playerMenu").click();
+	})
+	
+	$("#playerMenu").click(function() {
+		$.ajax({
+			url:"/ssm-crud/getAllPlayers",
+			type:"get",
+			success:function(res){
+				build_playList(res.extend.playList);
+			}
+		});
+	})
+	
+	function build_playList(playList) {
+		$("#goalkeepers").empty();
+		$("#defenders").empty();
+		$("#midfielders").empty();
+		$("#forwards").empty();
+		var goalkeeperNum=0;
+		var defenderNum=0;
+		var midfielderNum=0;
+		var forwardNum=0;
+		$.each(playList,function(index,item){
+				var itemLi = $("<li></li>").addClass("list-group-item player");
+				var itemA = $("<a></a>").prop("href","javascript:void(0)").attr("playerId",item.playerId);
+				var itemImg = $("<img>").addClass("img-circle player").prop("src",item.playerPhoto);
+				var numDiv = $("<div></div>").append(item.playerNum+"号").addClass("number");
+				var nameSpan = $("<span></span>").append(item.playerName);
+				if (item.playerPos == "门将") {
+					itemLi.append(itemA.append(itemImg).append(numDiv).append(nameSpan)).appendTo("#goalkeepers");
+					goalkeeperNum++;
+				}
+				if (item.playerPos == "后卫") {
+					itemLi.append(itemA.append(itemImg).append(numDiv).append(nameSpan)).appendTo("#defenders");
+					defenderNum++;
+				}
+				if (item.playerPos == "中场") {
+					itemLi.append(itemA.append(itemImg).append(numDiv).append(nameSpan)).appendTo("#midfielders");
+					midfielderNum++;
+				}
+				if (item.playerPos == "前锋") {
+					itemLi.append(itemA.append(itemImg).append(numDiv).append(nameSpan)).appendTo("#forwards");
+					forwardNum++;
+				}
+			})
+			$("#goalkeeperNum").text(goalkeeperNum+"人");
+			$("#defenderNum").text(defenderNum+"人");
+			$("#midfielderNum").text(midfielderNum+"人");
+			$("#forwardNum").text(forwardNum+"人");
+	}
+	
+	$(document).on("click",".list-group-item a",function(){
+		//查出球员信息，显示
+		getPlayer($(this).attr("playerId"));
+		//把球员id传递给模态框的更新按钮
+		$("#playerModal").modal({
+			/* backdrop:"static" */
+		});
+	});
+	
+	function getPlayer(id) {
+		$.ajax({
+			url:"/ssm-crud/player/"+id,
+			type:"get",
+			success:function(res){
+				var player = res.extend.player;
+				$("#playerNameShow").text(player.playerName);
+				$("#fullNameShow").text(player.playerFullname);
+				$("#numShow").text(player.playerNum+"号");
+				$("#posShow").text(player.playerPos);
+				$("#playerHeight").text(player.playerHeight+"cm");
+				$("#weightShow").text(player.playerWeight+"kg");
+				$("#birthShow").text(player.playerBirth);
+				$("#nationShow").text(player.playerNation);
+				$("#wageShow").text("￡ "+parseFloat(player.playerWage)/10000+"万");
+				$("#contractShow").text(player.playerContract);
+				$("#photoShow").prop("src",player.playerPhoto);
+			}
+		});
+	}
+	
+	//管理团队触发
+	$("#mansMenu2").click(function() {
+		$("#mansMenu").click();
+	})
+	
+	$("#mansMenu").click(function() {
+		$.ajax({
+			url:"/ssm-crud/getMans",
+			type:"get",
+			success:function(res){
+				build_mans_panels(res.extend.managers);
+			}
+		});
+		$.ajax({
+			url:"/ssm-crud/getCoachs",
+			type:"get",
+			success:function(res){
+				build_coachs_panels(res.extend.coachs);
+			}
+		});
+	})
+	
+function build_coachs_panels(result){
+	$("#coachs_div").empty();
+	var mans = result;
+	$.each(mans,function(index,item){
+		var date = new Date(item.manYear)
+		var year = date.getFullYear();
+		var panelDiv = $("<div></div>").addClass("col-md-4 panel panel-primary").css("padding","0px");
+		var panelHeadDiv = $("<div></div>").addClass("panel-heading").css("text-align","center")
+							.append($("<h3></h3>").addClass("panel-title").append(item.manTitle));
+		var img = $("<img></img>").addClass("img-circle").css("width","120px").css("height","120px");
+		img.attr("src",item.manImg);
+		var Ul = $("<ul></ul>").addClass("list-group")
+			.append($("<li></li>").addClass("list-group-item list-group-item-success").append(item.manName))
+			.append($("<li></li>").addClass("list-group-item list-group-item-info").append(item.manForname))
+			.append($("<li></li>").addClass("list-group-item list-group-item-warning").append("国籍："+item.manNation))
+			.append($("<li></li>").addClass("list-group-item list-group-item-danger").append("任职时间："+year+"年"));
+		var panelBodyDiv = $("<div></div>").addClass("panel-body")
+		.append($("<div></div>").addClass("row").append($("<div></div>").addClass("col-md-1"))
+												.append($("<div></div>").addClass("col-md-4").append(img))
+												.append($("<div></div>").addClass("col-md-6").append(Ul)));
+		panelDiv.append(panelHeadDiv).append(panelBodyDiv).appendTo(coachs_div);
+	});
+}
+	
+function build_mans_panels(result){
+	$("#mans_div").empty();
+	var mans = result;
+	$.each(mans,function(index,item){
+		var date = new Date(item.manYear)
+		var year = date.getFullYear();
+		var panelDiv = $("<div></div>").addClass("col-md-4 panel panel-primary").css("padding","0px");
+		var panelHeadDiv = $("<div></div>").addClass("panel-heading").css("text-align","center")
+							.append($("<h3></h3>").addClass("panel-title").append(item.manTitle));
+		var img = $("<img></img>").addClass("img-circle").css("width","120px").css("height","120px");
+		img.attr("src",item.manImg);
+		var Ul = $("<ul></ul>").addClass("list-group")
+			.append($("<li></li>").addClass("list-group-item list-group-item-success").append(item.manName))
+			.append($("<li></li>").addClass("list-group-item list-group-item-info").append(item.manForname))
+			.append($("<li></li>").addClass("list-group-item list-group-item-warning").append("国籍："+item.manNation))
+			.append($("<li></li>").addClass("list-group-item list-group-item-danger").append("任职时间："+year+"年"));
+		var panelBodyDiv = $("<div></div>").addClass("panel-body")
+		.append($("<div></div>").addClass("row").append($("<div></div>").addClass("col-md-1"))
+												.append($("<div></div>").addClass("col-md-4").append(img))
+												.append($("<div></div>").addClass("col-md-6").append(Ul)));
+		panelDiv.append(panelHeadDiv).append(panelBodyDiv).appendTo(mans_div);
+	});
+}
+	</script>
+<script>
+	$("#demo-navbar .dropdown-menu a").click(function() {
+		var href = $(this).attr('href');
+		$("#tab-list a[href = '" + href + "']").tab('show');
+	})
+	// 设置涟漪效果使用方法非常简单 只需要引入jq库 然后在使用选择器选择要渲染的标签获得jQuery对象后使用ripples方法，下面三个参数自己试验就可以实现涟漪的效果了.例如
+	$('section').ripples({
+		//imageUrl: null,   //要用作背景的图像的URL。如果没有，插件将尝试使用计算的background-imageCSS属性的值。也接受数据URI。
+		dropRadius : 10, //通过在画布上单击或移动鼠标而产生的拖放的大小（以像素为单位）。
+		perturbance : 0.04, //基本上由波纹引起的折射量。0表示没有折射。
+		resolution : 512, //要呈现的WebGL纹理的宽度和高度。此值越大，渲染越平滑，涟漪传播越慢。
+	//interactive: true,//鼠标点击和鼠标移动是否会触发效果。
+	//crossOrigin: "",  //用于受影响图像的crossOrigin属性。
+	});
+	// 设置页脚特效
+	jQuery('#bobo').raindrops({
+		color : '#a5d2da',
+		canvasHeight : 80,
+		waveHeight : 300,
+	});
+</script>
+
+</body>
+</html>

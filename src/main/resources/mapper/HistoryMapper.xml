@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.football.crud.dao.HistoryMapper">
+  <resultMap id="BaseResultMap" type="com.football.crud.bean.History">
+    <id column="his_id" jdbcType="INTEGER" property="hisId" />
+    <result column="his_text" jdbcType="VARCHAR" property="hisText" />
+    <result column="his_img" jdbcType="VARCHAR" property="hisImg" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    his_id, his_text, his_img
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_his
+    where his_id = #{hisId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_his
+    where his_id = #{hisId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.football.crud.bean.History">
+    insert into tbl_his (his_id, his_text, his_img
+      )
+    values (#{hisId,jdbcType=INTEGER}, #{hisText,jdbcType=VARCHAR}, #{hisImg,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.football.crud.bean.History">
+    insert into tbl_his
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="hisId != null">
+        his_id,
+      </if>
+      <if test="hisText != null">
+        his_text,
+      </if>
+      <if test="hisImg != null">
+        his_img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="hisId != null">
+        #{hisId,jdbcType=INTEGER},
+      </if>
+      <if test="hisText != null">
+        #{hisText,jdbcType=VARCHAR},
+      </if>
+      <if test="hisImg != null">
+        #{hisImg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.football.crud.bean.History">
+    update tbl_his
+    <set>
+      <if test="hisText != null">
+        his_text = #{hisText,jdbcType=VARCHAR},
+      </if>
+      <if test="hisImg != null">
+        his_img = #{hisImg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where his_id = #{hisId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.football.crud.bean.History">
+    update tbl_his
+    set his_text = #{hisText,jdbcType=VARCHAR},
+      his_img = #{hisImg,jdbcType=VARCHAR}
+    where his_id = #{hisId,jdbcType=INTEGER}
+  </update>
+</mapper>

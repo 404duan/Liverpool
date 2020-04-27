@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.football.crud.dao.ManagerMapper">
+  <resultMap id="BaseResultMap" type="com.football.crud.bean.Manager">
+    <id column="man_id" jdbcType="INTEGER" property="manId" />
+    <result column="man_name" jdbcType="VARCHAR" property="manName" />
+    <result column="man_forname" jdbcType="VARCHAR" property="manForname" />
+    <result column="man_nation" jdbcType="CHAR" property="manNation" />
+    <result column="man_year" jdbcType="DATE" property="manYear" />
+    <result column="man_type" jdbcType="INTEGER" property="manType" />
+    <result column="man_title" jdbcType="CHAR" property="manTitle" />
+    <result column="man_img" jdbcType="VARCHAR" property="manImg" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    man_id, man_name, man_forname, man_nation, man_year, man_type, man_title, man_img
+  </sql>
+  
+  <select id="selectAllMans" resultMap="BaseResultMap">
+  	select * from tbl_man where man_type=0
+  </select>
+  <select id="selectAllCoachs" resultMap="BaseResultMap">
+  	select * from tbl_man where man_type=1
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_man
+    where man_id = #{manId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_man
+    where man_id = #{manId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.football.crud.bean.Manager">
+    insert into tbl_man (man_id, man_name, man_forname, 
+      man_nation, man_year, man_type, 
+      man_title, man_img)
+    values (#{manId,jdbcType=INTEGER}, #{manName,jdbcType=VARCHAR}, #{manForname,jdbcType=VARCHAR}, 
+      #{manNation,jdbcType=CHAR}, #{manYear,jdbcType=DATE}, #{manType,jdbcType=INTEGER}, 
+      #{manTitle,jdbcType=CHAR}, #{manImg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.football.crud.bean.Manager">
+    insert into tbl_man
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="manId != null">
+        man_id,
+      </if>
+      <if test="manName != null">
+        man_name,
+      </if>
+      <if test="manForname != null">
+        man_forname,
+      </if>
+      <if test="manNation != null">
+        man_nation,
+      </if>
+      <if test="manYear != null">
+        man_year,
+      </if>
+      <if test="manType != null">
+        man_type,
+      </if>
+      <if test="manTitle != null">
+        man_title,
+      </if>
+      <if test="manImg != null">
+        man_img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="manId != null">
+        #{manId,jdbcType=INTEGER},
+      </if>
+      <if test="manName != null">
+        #{manName,jdbcType=VARCHAR},
+      </if>
+      <if test="manForname != null">
+        #{manForname,jdbcType=VARCHAR},
+      </if>
+      <if test="manNation != null">
+        #{manNation,jdbcType=CHAR},
+      </if>
+      <if test="manYear != null">
+        #{manYear,jdbcType=DATE},
+      </if>
+      <if test="manType != null">
+        #{manType,jdbcType=INTEGER},
+      </if>
+      <if test="manTitle != null">
+        #{manTitle,jdbcType=CHAR},
+      </if>
+      <if test="manImg != null">
+        #{manImg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.football.crud.bean.Manager">
+    update tbl_man
+    <set>
+      <if test="manName != null">
+        man_name = #{manName,jdbcType=VARCHAR},
+      </if>
+      <if test="manForname != null">
+        man_forname = #{manForname,jdbcType=VARCHAR},
+      </if>
+      <if test="manNation != null">
+        man_nation = #{manNation,jdbcType=CHAR},
+      </if>
+      <if test="manYear != null">
+        man_year = #{manYear,jdbcType=DATE},
+      </if>
+      <if test="manType != null">
+        man_type = #{manType,jdbcType=INTEGER},
+      </if>
+      <if test="manTitle != null">
+        man_title = #{manTitle,jdbcType=CHAR},
+      </if>
+      <if test="manImg != null">
+        man_img = #{manImg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where man_id = #{manId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.football.crud.bean.Manager">
+    update tbl_man
+    set man_name = #{manName,jdbcType=VARCHAR},
+      man_forname = #{manForname,jdbcType=VARCHAR},
+      man_nation = #{manNation,jdbcType=CHAR},
+      man_year = #{manYear,jdbcType=DATE},
+      man_type = #{manType,jdbcType=INTEGER},
+      man_title = #{manTitle,jdbcType=CHAR},
+      man_img = #{manImg,jdbcType=VARCHAR}
+    where man_id = #{manId,jdbcType=INTEGER}
+  </update>
+</mapper>

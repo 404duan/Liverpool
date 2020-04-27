@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.football.crud.dao.BusinessMapper">
+  <resultMap id="BaseResultMap" type="com.football.crud.bean.Business">
+    <id column="busi_id" jdbcType="INTEGER" property="busiId" />
+    <result column="busi_name" jdbcType="CHAR" property="busiName" />
+    <result column="busi_forname" jdbcType="CHAR" property="busiForname" />
+    <result column="busi_type" jdbcType="VARCHAR" property="busiType" />
+    <result column="busi_logo" jdbcType="VARCHAR" property="busiLogo" />
+    <result column="busi_href" jdbcType="VARCHAR" property="busiHref" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    busi_id, busi_name, busi_forname, busi_type, busi_logo, busi_href
+  </sql>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+  	select * from tbl_busi
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_busi
+    where busi_id = #{busiId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_busi
+    where busi_id = #{busiId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.football.crud.bean.Business">
+    insert into tbl_busi (busi_id, busi_name, busi_forname, 
+      busi_type, busi_logo, busi_href
+      )
+    values (#{busiId,jdbcType=INTEGER}, #{busiName,jdbcType=CHAR}, #{busiForname,jdbcType=CHAR}, 
+      #{busiType,jdbcType=VARCHAR}, #{busiLogo,jdbcType=VARCHAR}, #{busiHref,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.football.crud.bean.Business">
+    insert into tbl_busi
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="busiId != null">
+        busi_id,
+      </if>
+      <if test="busiName != null">
+        busi_name,
+      </if>
+      <if test="busiForname != null">
+        busi_forname,
+      </if>
+      <if test="busiType != null">
+        busi_type,
+      </if>
+      <if test="busiLogo != null">
+        busi_logo,
+      </if>
+      <if test="busiHref != null">
+        busi_href,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="busiId != null">
+        #{busiId,jdbcType=INTEGER},
+      </if>
+      <if test="busiName != null">
+        #{busiName,jdbcType=CHAR},
+      </if>
+      <if test="busiForname != null">
+        #{busiForname,jdbcType=CHAR},
+      </if>
+      <if test="busiType != null">
+        #{busiType,jdbcType=VARCHAR},
+      </if>
+      <if test="busiLogo != null">
+        #{busiLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="busiHref != null">
+        #{busiHref,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.football.crud.bean.Business">
+    update tbl_busi
+    <set>
+      <if test="busiName != null">
+        busi_name = #{busiName,jdbcType=CHAR},
+      </if>
+      <if test="busiForname != null">
+        busi_forname = #{busiForname,jdbcType=CHAR},
+      </if>
+      <if test="busiType != null">
+        busi_type = #{busiType,jdbcType=VARCHAR},
+      </if>
+      <if test="busiLogo != null">
+        busi_logo = #{busiLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="busiHref != null">
+        busi_href = #{busiHref,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where busi_id = #{busiId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.football.crud.bean.Business">
+    update tbl_busi
+    set busi_name = #{busiName,jdbcType=CHAR},
+      busi_forname = #{busiForname,jdbcType=CHAR},
+      busi_type = #{busiType,jdbcType=VARCHAR},
+      busi_logo = #{busiLogo,jdbcType=VARCHAR},
+      busi_href = #{busiHref,jdbcType=VARCHAR}
+    where busi_id = #{busiId,jdbcType=INTEGER}
+  </update>
+</mapper>
